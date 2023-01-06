@@ -12,10 +12,16 @@ WORKDIR $GOBIN
 RUN go install github.com/paij0se/cligpt@latest
 
 # now get binary
-FROM scratch as binary
+FROM alpine:3.17.0 as binary
+
+# set workdir
+ENV HOME=/chatgpt
 
 # get cligpt binary
-COPY --from=builder /cligpt_build/cligpt .
+COPY --from=builder /cligpt_build/cligpt /usr/bin/cligpt
 
-# set cmd
-CMD ["./cligpt"]
+# set entry
+ENTRYPOINT ["/usr/bin/cligpt"]
+
+# set command for testing
+CMD ["How does ChatGPT API work?"]
