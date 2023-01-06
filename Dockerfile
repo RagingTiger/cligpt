@@ -1,27 +1,26 @@
 # base golang image
 FROM golang:1.19.4 as builder
 
-# set gobin env and turn off CGO
-ENV GOBIN=/cligpt_build
+# setup workdir
+WORKDIR /cligpt
+
+# turn off CGO
 ENV CGO_ENABLED=0
 
-# setup workdir
-WORKDIR $GOBIN
+# get source
+COPY . .
 
-# now install
-RUN go install github.com/paij0se/cligpt@latest
+# now build
+RUN go build -o bin/
 
 # now get binary
 FROM alpine:3.17.0 as binary
 
 # set workdir
-ENV HOME=/chatgpt
+ENV HOME=/cligpt
 
 # get cligpt binary
-COPY --from=builder /cligpt_build/cligpt /usr/bin/cligpt
+COPY --from=builder /cligpt/bin/cligpt /usr/bin/cligpt
 
 # set entry
 ENTRYPOINT ["/usr/bin/cligpt"]
-
-# set command for testing
-CMD ["How does ChatGPT API work?"]
