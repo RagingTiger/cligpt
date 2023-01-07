@@ -39,6 +39,14 @@ type TextCompletionUsage struct {
   TotalTokens      int `json:"total_tokens"`
 }
 
+func HealthStatus(w http.ResponseWriter, req *http.Request) {
+  // set status to 200
+  w.WriteHeader(http.StatusOK)
+
+  // write response
+  w.Write([]byte("Status 200: Server Accessible\n"))
+}
+
 func callAPI(prompt string, auth string, model string, max_tokens string) string {
   // setting up http client to send request to API
   client := &http.Client{}
@@ -121,7 +129,7 @@ func main() {
     }
 
     // notify of server startup
-    fmt.Println("Starting up ChatGPT server.")
+    log.Printf("Starting up ChatGPT server.")
 
     // setting up handler
     ChatGPTInterface := func(w http.ResponseWriter, req *http.Request) {
@@ -145,16 +153,19 @@ func main() {
       // log prompt and response text
       log.Printf("Prompt: %s", prompt)
       log.Printf("Response: %s", text)
+      log.Printf("End")
 
       // respond with ChatGPT output
       fmt.Fprintf(w, "%s\n", text)
     }
 
     // register handlers
+    http.HandleFunc("/", HealthStatus)
+    http.HandleFunc("/health", HealthStatus)
     http.HandleFunc("/chatgpt", ChatGPTInterface)
 
     // start up server
-    http.ListenAndServe(":8080", nil)
+    log.Fatal(http.ListenAndServe(":8080", nil))
 
   } else {
     // check prompt is submitted
