@@ -152,7 +152,7 @@ func main() {
 
       // log prompt and response text
       log.Printf("Prompt: %s", prompt)
-      log.Printf("Response: %s", text)
+      log.Printf("Response: %s\n\n", text)
       log.Printf("End")
 
       // respond with ChatGPT output
@@ -165,7 +165,7 @@ func main() {
     http.HandleFunc("/chatgpt", ChatGPTInterface)
 
     // start up server
-    log.Fatal(http.ListenAndServe(":8080", nil))
+    log.Fatal(http.ListenAndServe(":80", nil))
 
   } else {
     // check prompt is submitted

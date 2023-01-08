@@ -22,5 +22,12 @@ ENV HOME=/cligpt
 # get cligpt binary
 COPY --from=builder /cligpt/bin/cligpt /usr/bin/cligpt
 
+# do ports for server feature
+EXPOSE 80
+
+# check health of server
+HEALTHCHECK --interval=5m --timeout=3s \
+  CMD wget --no-verbose --tries=1 --spider http://localhost/health || exit 1
+
 # set entry
 ENTRYPOINT ["/usr/bin/cligpt"]
