@@ -156,7 +156,7 @@ func main() {
       log.Printf("End")
 
       // respond with ChatGPT output
-      fmt.Fprintf(w, "%s\n", text)
+      fmt.Fprintf(w, "%s\n\n", text)
     }
 
     // register handlers
