@@ -1,5 +1,29 @@
 <h1>cligpt</h1>
 
+<h1>Docker</h1>
+
+Here we will cover using the *Docker image*.
+
+<h2>Server</h2>
+
+The `cligpt` command can be run in `--server` mode as follows:
+```
+docker run \
+         -d \
+         --name cligpt \
+         -e TZ="America/New_York" \
+         -v $YOUR_CONFIG_PATH:/cligpt/.config/cligpt \
+         -p 8080:80 \
+         ghcr.io/ragingtiger/cligpt:main \
+           --server
+```
+
+To send *prompts* to the server simply send a **GET** request like the one
+below:
+```
+curl localhost:8080/chatgpt?prompt=Write+a+haiku+on+war
+```
+
 <h1>Installation</h1>
 
 Go 1.17+
