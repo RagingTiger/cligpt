@@ -16,6 +16,10 @@ RUN go build -o bin/
 # now get binary
 FROM alpine:3.17.0 as binary
 
+# get timezone packages for logging
+RUN apk update && \
+    apk add --no-cache tzdata
+
 # set workdir
 ENV HOME=/cligpt
 
