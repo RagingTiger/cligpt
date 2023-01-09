@@ -10,7 +10,7 @@ import (
   "os"
   "strings"
 
-  "github.com/paij0se/cligpt/cli"
+  "github.com/RagingTiger/cligpt/cli"
 )
 
 // setting up cli args
