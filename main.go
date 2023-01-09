@@ -47,7 +47,7 @@ func HealthStatus(w http.ResponseWriter, req *http.Request) {
   w.Write([]byte("Status 200: Server Accessible\n"))
 }
 
-func callAPI(prompt string, auth string, model string, max_tokens string) string {
+func CallAPI(prompt string, auth string, model string, max_tokens string) string {
   // setting up http client to send request to API
   client := &http.Client{}
 
@@ -142,8 +142,7 @@ func main() {
       var prompt = req.Form.Get("prompt")
 
       // call ChatGPT API with prompt and config vars
-      var text string
-      text = callAPI(
+      text := CallAPI(
         prompt,
         config["auth"],
         config["model"],
@@ -179,7 +178,7 @@ func main() {
     }
 
     // call ChatGPT API with prompt and config vars
-    text := callAPI(
+    text := CallAPI(
       flag.Args()[0],
       config["auth"],
       config["model"],
