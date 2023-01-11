@@ -25,9 +25,9 @@ func SendPrompt(requestURL string, prompt string) string {
 
   // send request and store response
   resp, err := http.DefaultClient.Do(req)
-	if err != nil {
-		log.Fatalf("error making http request: %s\n", err)
-	}
+  if err != nil {
+    log.Fatalf("error making http request: %s\n", err)
+  }
 
   // get actual chatgpt generated text
   bodyText, err := ioutil.ReadAll(resp.Body)
@@ -52,19 +52,19 @@ func main() {
     Name:  "prompt",
     Usage: "send prompts to cligpt server",
     Flags: []cli.Flag{
-            &cli.StringFlag{
-                Name:  "port",
-                Value: "8080",
-                Usage: "port of cligpt server",
-                Destination: &port,
-            },
-            &cli.StringFlag{
-                Name:  "address",
-                Value: "0.0.0.0",
-                Usage: "address of cligpt server",
-                Destination: &address,
-            },
-        },
+      &cli.StringFlag{
+        Name:  "port",
+        Value: "8080",
+        Usage: "port of cligpt server",
+        Destination: &port,
+      },
+      &cli.StringFlag{
+        Name:  "address",
+        Value: "0.0.0.0",
+        Usage: "address of cligpt server",
+        Destination: &address,
+      },
+    },
     Action: func(*cli.Context) error {
       // setup chatgpt url
       server := "http://" + address + ":" + port + "/chatgpt"
