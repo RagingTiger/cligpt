@@ -10,6 +10,7 @@ The `cligpt` command can be run in `--server` mode as follows:
 ```
 docker run \
          -d \
+         --restart unless-stopped \
          --name cligpt \
          -e TZ="America/New_York" \
          -v $YOUR_CONFIG_PATH:/cligpt/.config/cligpt \
